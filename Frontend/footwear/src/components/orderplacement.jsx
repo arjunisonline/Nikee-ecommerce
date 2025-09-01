@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const OrderPlacement = () => {
+  const API_BASE = process.env.API_BASE;
   const [product, setProduct] = useState(null);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState('');
@@ -16,12 +17,12 @@ const OrderPlacement = () => {
 
     const fetchData = async () => {
       try {
-        const productRes = await axios.get(`http://localhost:3000/api/product/${productId}`, {
+        const productRes = await axios.get(`${API_BASE}/api/product/${productId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProduct(productRes.data.product);
 
-        const userRes = await axios.get("http://localhost:3000/api/user", {
+        const userRes = await axios.get(`${API_BASE}/api/user`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUser(userRes.data.user);
@@ -37,7 +38,7 @@ const OrderPlacement = () => {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.post(`http://localhost:3000/api/checkout/${productId}`, {}, {
+      await axios.post(`${API_BASE}/api/checkout/${productId}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Order placed successfully");

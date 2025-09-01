@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const API_BASE = process.env.API_BASE;
   var [name, setName] = useState('');
   var [email, setEmail] = useState('');
   var [password, setPassword] = useState('');
@@ -31,7 +32,7 @@ const SignupPage = () => {
         number,
       }
       console.log(user);
-      const res = await axios.post('http://localhost:3000/api/signup',user);
+      const res = await axios.post(`${API_BASE}/api/signup`,user);
       setMessage(res.data.message || 'signup successful');
       navigate('/login');
 

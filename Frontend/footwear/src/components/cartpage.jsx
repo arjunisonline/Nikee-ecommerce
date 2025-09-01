@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const CartPage = () => {
+  const API_BASE = process.env.API_BASE;
   const [cartItems, setCartItems] = useState([]);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const CartPage = () => {
   const fetchCart = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.get("http://localhost:3000/api/cart", {
+      const res = await axios.get(`${API_BASE}/api/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -34,7 +35,7 @@ const CartPage = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `http://localhost:3000/api/remove/${productId}`,
+        `${API_BASE}/api/remove/${productId}`,
         {},
         {
           headers: {
@@ -51,7 +52,7 @@ const CartPage = () => {
   const handlePlaceOrder = async () => {
     const token = localStorage.getItem("token");
     try {
-      await axios.post("http://localhost:3000/api/buycart", {}, {
+      await axios.post(`${API_BASE}/api/buycart`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

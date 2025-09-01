@@ -5,6 +5,7 @@ import Navbar from "./navbar";
 import Footer from "./reusable-pages/footer";
 
 const ProductDetailed = () => {
+  const API_BASE = process.env.API_BASE;
   const { productId } = useParams();
   const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ const ProductDetailed = () => {
 
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/product/${productId}`, {
+        const res = await axios.get(`${API_BASE}/api/product/${productId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProduct(res.data.product);
@@ -33,7 +34,7 @@ const ProductDetailed = () => {
     const token = localStorage.getItem("token");
     try {
       await axios.post(
-        `http://localhost:3000/api/addtocart/${productId}`,
+        `${API_BASE}/api/addtocart/${productId}`,
         { quantity: parseInt(quantity) },
         {
           headers: {

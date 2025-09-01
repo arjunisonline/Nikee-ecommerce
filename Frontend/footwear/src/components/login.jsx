@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+    const API_BASE = process.env.API_BASE;
 
     var [email,setEmail] = useState('')
     var [password,setPassword] = useState('');
@@ -13,7 +14,7 @@ const LoginPage = () => {
         q.preventDefault();
 
         try{
-            const res = await axios.post('http://localhost:3000/api/login',{email,password});
+            const res = await axios.post(`${API_BASE}/api/login`,{email,password});
             const token = res.data.token;
             localStorage.setItem('token',token);
             console.log(token);

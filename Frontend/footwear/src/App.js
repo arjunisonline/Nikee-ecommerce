@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function App() {
+  const API_BASE = process.env.API_BASE;
   const navigate = useNavigate();
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
@@ -18,7 +19,7 @@ function App() {
     // Fetch random products
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/products/featured'); // your route
+        const response = await axios.get(`${API_BASE}/api/products/featured`); // your route
         setFeaturedProducts(response.data); // expects array of products
       } catch (err) {
         console.error("Failed to fetch featured products", err);

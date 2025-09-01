@@ -5,6 +5,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const OrderHistory = () => {
+  const API_BASE = process.env.API_BASE;
   const [orderItems, setOrderItems] = useState([]);
   const [message, setMessage] = useState("");
   const location = useLocation();
@@ -13,7 +14,7 @@ const OrderHistory = () => {
     const token = localStorage.getItem("token");
     const fetchOrder = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/orders", {
+        const res = await axios.get(`${API_BASE}/api/orders`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

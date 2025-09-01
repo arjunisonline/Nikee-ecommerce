@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const FilterModal = ({ filters, setFilters, onApply }) => {
+  const API_BASE = process.env.API_BASE;
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
 
   useEffect(() => {
     const fetchFilters = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/filters");
+        const res = await axios.get(`${API_BASE}/api/filters`);
         setCategories(res.data.categories || []);
         setBrands(res.data.brands || []);
       } catch (err) {

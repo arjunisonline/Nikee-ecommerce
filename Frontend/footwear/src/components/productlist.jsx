@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function ProductList() {
+  const API_BASE = process.env.API_BASE;
   const [products, setProducts] = useState([]);
   const [message, setMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,7 +38,7 @@ function ProductList() {
     });
 
     try {
-      const res = await axios.get(`http://localhost:3000/api/products?${params.toString()}`, {
+      const res = await axios.get(`${API_BASE}/api/products?${params.toString()}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +60,7 @@ function ProductList() {
     const token = localStorage.getItem("token");
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/addtocart/${productId}`,
+        `${API_BASE}/api/addtocart/${productId}`,
         {},
         {
           headers: {

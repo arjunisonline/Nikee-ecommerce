@@ -3,6 +3,7 @@ import Navbar from "./navbar";
 import axios from "axios";
 
 const UserProfile = () => {
+  const API_BASE = process.env.API_BASE;
   const [currentPass, setCurrentPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [confirmNewPass, setConfirmNewPass] = useState('');
@@ -17,7 +18,7 @@ const UserProfile = () => {
     const token = localStorage.getItem("token");
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/changepass",
+        `${API_BASE}/api/changepass`,
         {
           currentPassword: currentPass,
           newPassword: newPass
