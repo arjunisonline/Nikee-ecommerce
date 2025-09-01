@@ -1,0 +1,109 @@
+<div class="container-fluid py-5">
+  <div class="row mb-4">
+    <div class="col mx-3">
+      <div class="d-flex mx-3 gap-3 justify-content-end">
+        <button class="btn btn-secondary" data-bs-target="#filterModal" data-bs-toggle="modal">Filter</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row fw-bold border-bottom pb-2 mb-3 mx-5">
+    <div class="col-md-2">user</div>
+    <div class="col-md-2">Category</div>
+    <div class="col-md-2">Order Info</div>
+    <div class="col-md-2">Status</div>
+    <div class="col-md-2">Action</div>
+  </div>
+  <% orders.forEach(order=> { %>
+    <div class="row align-items-center border-bottom py-3 mx-5">
+      <div class="col-md-2">
+        <h6 class="mb-1">
+          <%= order.username %>
+        </h6>
+      </div>
+      <div class="col-md-2">
+        <h6 class="mb-1">
+          <%= order.category %>
+        </h6>
+      </div>
+      <div class="col-md-2">
+        <h6 class="mb-1">
+          <%= order.productName %> (x<%= order.quantity %>)
+        </h6>
+        <small class="text-muted">Price: ₹<%= order.price %></small>
+      </div>
+      <div class="col-md-2">
+        <span class="text-danger">
+          <%= order.status %>
+        </span>
+      </div>
+      <div class="col-md-2">
+        <form action="/orders/cancel-order/<%= order.userId %>/<%= order.orderId %>" method="POST">
+          <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">Cancel</button>
+        </form>
+
+      </div>
+    </div>
+    <% }) %>
+</div>
+
+<nav class="mb-5 d-flex justify-content-center">
+  <ul class="pagination">
+    <% if (pagination.hasPrevPage) { %>
+      <li class="page-item">
+        <a class="page-link" href="?page=<%= pagination.prevPage %><%= selectedStatus ? `&status=${selectedStatus}` : '' %>">Previous</a>
+      </li>
+    <% } else { %>
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    <% } %>
+
+    <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+      <li class="page-item <%= pagination.currentPage === i ? 'active' : '' %>">
+        <a class="page-link" href="?page=<%= i %><%= selectedStatus ? `&status=${selectedStatus}` : '' %>"><%= i %></a>
+      </li>
+    <% } %>
+
+    <% if (pagination.hasNextPage) { %>
+      <li class="page-item">
+        <a class="page-link" href="?page=<%= pagination.nextPage %><%= selectedStatus ? `&status=${selectedStatus}` : '' %>">Next</a>
+      </li>
+    <% } else { %>
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+    <% } %>
+  </ul>
+</nav>
+
+
+<div class="modal fade" id="filterModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content" id="filterModal" method="get" action="/orders">
+      <div class="modal-header">
+        <h5 class="modal-title">Filter orders</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="pending" name="status">
+          <label class="form-check-label" >
+            pending
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="cancelled" name="status">
+          <label class="form-check-label" >
+            cancelled
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="delivered" name="status">
+          <label class="form-check-label">
+            delivered
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning">filter</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="container-fluid py-5">
+  <!-- Table header -->
+  <div class="row fw-bold border-bottom pb-2 mb-3 mx-5">
+    <div class="col-md-2">Name</div>
+    <div class="col-md-3">E-mail</div>
+    <div class="col-md-3">Address</div>
+    <div class="col-md-3">Number</div>
+  </div>
+
+  <!-- User rows -->
+  <% users.forEach(function(user) { %>
+    <div class="row align-items-center border-bottom py-3 mx-5">
+      <div class="col-md-2">
+        <p class="mb-0 text-muted"><%= user.name %></p>
+      </div>
+      <div class="col-md-3">
+        <p class="mb-0 text-muted"><%= user.email %></p>
+      </div>
+      <div class="col-md-3">
+        <p class="mb-0 text-muted"><%= user.address %></p>
+      </div>
+      <div class="col-md-3">
+        <p class="mb-0 text-muted"><%= user.number %></p>
+      </div>
+    </div>
+  <% }); %>
+</div>
